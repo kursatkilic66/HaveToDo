@@ -26,13 +26,13 @@ const handleAdd = () => {
         z-index: 1000;
       ">
         <label for="title" style="width: 50%;padding: 10px;">Task Name:</label>
-        <input type="text" id="taskName" name="title" style="width: 50%; height:20px; border-radius: 10px;" required><br><br>
+        <input type="text" id="taskName" name="title" style="width: 50%; height:20px; border-radius: 4px;" required><br><br>
 
         <label for="due_date" style="width: 50%;margin: 10px;">Due Date:</label>
-        <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 10px;width: 50%;"><br><br>
+        <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;width: 50%;"><br><br>
 
         <label for="description" style="width: 50%; margin: 10px;">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50" required style="max-width: fit-content;border: solid 2px"></textarea><br><br>
+        <textarea id="description" name="description" rows="4" cols="50" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;"></textarea><br><br>
 
         <button type="submit" id="addTaskButton" style="width: 30%; height:30px; border-radius: 10px; cursor: pointer; margin-top:10px;">
           Add Task
