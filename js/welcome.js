@@ -1,3 +1,6 @@
+  const BASE_URL = "https://havetodoonline-production.up.railway.app";   
+
+
 const handleAdd = () => {
   // Eğer form zaten varsa yeni form açma
   if (document.getElementById("taskFormOverlay")) return;
@@ -65,7 +68,7 @@ const handleSubmit = async (event) => {
 
   try {
     const response = await fetch(
-      "http://localhost:8080/rest/api/task/saveTask",
+      `${BASE_URL}/rest/api/task/saveTask`,
       {
         method: "POST",
         headers: {
@@ -104,7 +107,7 @@ const loadData = async () => {
   pw = sessionStorage.getItem("password");
   try {
     const response = await fetch(
-      "http://localhost:8080/rest/api/task/myTasks",
+      `${BASE_URL}/rest/api/task/myTasks`,
       {
         method: "GET",
         headers: {
@@ -175,7 +178,7 @@ const deleteTask = async (taskId) => {
   console.log("Deleting task with ID:", taskId,email,pw);
   try {
     const response = await fetch(
-      `http://localhost:8080/rest/api/task/delete/${taskId}`,
+      `${BASE_URL}/rest/api/task/delete/${taskId}`,
       {
         method: "DELETE",
         headers: {

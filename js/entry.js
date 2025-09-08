@@ -1,4 +1,6 @@
 
+  const BASE_URL = "https://havetodoonline-production.up.railway.app";   
+
   document.getElementById("register-button-id").addEventListener("click", () => {
     fetch("registerForm.html")
     .then((response) => response.text())
@@ -43,7 +45,7 @@ const registerUser = async () => {
 
   try {
     // Kullanıcı kaydı
-    const res = await fetch("http://localhost:8080/rest/api/user/saveUser", {
+    const res = await fetch(`${BASE_URL}/rest/api/user/saveUser`, {
       method: "POST",
       headers: { "Content-Type": "application/json"
        },
@@ -101,7 +103,7 @@ const loginUser = async (event) => {
   
 
   try {
-    const response = await fetch("http://localhost:8080/rest/api/user/login", {
+    const response = await fetch(`${BASE_URL}/rest/api/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -112,7 +114,7 @@ const loginUser = async (event) => {
       // const token = await response.text(); // plain text JWT al
       // localStorage.setItem("jwtToken", token); // token’ı sakla
       alert("Login successful!");
-      window.location.href = "http://127.0.0.1:3000/welcome.html";
+      window.location.href = "welcome.html";
       //loadData(); // yönlendir
     } else {
       const errText = await response.text();
