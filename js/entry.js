@@ -83,7 +83,9 @@ const registerUser = async () => {
 
     // Ana sayfaya yönlendir
     //window.location.href = "http://127.0.0.1:3000/welcome.html";
-    alert("Registration successful!\nPlease log in.");
+    //alert("Registration successful!\nPlease log in.");
+    sessionStorage.setItem("email", user.email);
+    sessionStorage.setItem("password", user.password);
     //goHome();
     window.location.href = "welcome.html";
   } catch (err) {
@@ -113,7 +115,7 @@ const loginUser = async (event) => {
     if (response.ok) {
       // const token = await response.text(); // plain text JWT al
       // localStorage.setItem("jwtToken", token); // token’ı sakla
-      alert("Login successful!");
+      //alert("Login successful!");
       window.location.href = "welcome.html";
       //loadData(); // yönlendir
     } else {
