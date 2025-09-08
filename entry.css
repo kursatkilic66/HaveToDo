@@ -46,6 +46,7 @@ body {
     font-weight: bold;
     color: #6d5b49;
     background-color: #f9f4ef;
+    cursor: pointer;
 
     
 
@@ -71,7 +72,12 @@ body {
     font-weight: bold;
     color: #6d5b49;
     background-color: #f9f4ef;
+    cursor: pointer;
 
+}
+.register-button:hover, .login-button:hover {
+    background-color: #e0d3c1;
+    transition: background-color 0.3s ease;
 }
 .login-button-container {
     height: 25%;

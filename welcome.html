@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="welcome.css" />
+    <script src="welcome.js" defer></script>
+    <title>Görev Yöneticisi</title>
+  </head>
+  <body>
+    <div
+      id="welcome_container"
+      style="
+        background-color: transparent;
+        height: 100vh;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+      "
+    >
+      <h1
+        style="
+          color: #4f340e;
+          font-size: xx-large;
+          font-weight: bold;
+          display: inline-block;
+        "
+      >
+        Görev Yöneticisi
+      </h1>
+      <h2 style="color: #6b4612; display: inline-block">
+        Günlük görevlerinizi organize edin
+      </h2>
+      <div>
+        <h2
+          id="welcome_addButton"
+          style="
+            display: inline-block;
+            border: #4f340e solid 2px;
+            cursor: pointer;
+            border-radius: 6px;
+            padding: 10px;
+          "
+          onclick="handleAdd()"
+        >
+          Yeni Görev Ekle
+        </h2>
+      </div>
+
+      <div
+        id="welcome_task_container"
+        style="
+          display: grid;
+          grid-template-columns: repeat(3, 1fr); /* 3 eşit kolon */
+          gap: 20px; /* görevler arası boşluk */
+          width: 100%; /* tam genişlik */
+          padding: 20px; /* kenarlardan iç boşluk */
+          margin: 0; /* dış margin sıfır */
+          box-sizing: border-box;
+          overflow-y: auto;
+        "
+      >
+        <!-- Görevler buraya yüklenecek -->
+      </div>
+    </div>
+  </body>
+</html>
