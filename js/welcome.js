@@ -25,16 +25,16 @@ const handleAdd = () => {
         font-size: larger;
         z-index: 1000;
       ">
-        <label for="title" style="width: 50%;padding: 10px;">Task Name:</label>
-        <input type="text" id="taskName" name="title" style="width: 50%; height:20px; border-radius: 4px;" required><br><br>
+        <label for="title" style="padding: 10px;">Task Name:</label>
+        <input type="text" id="taskName" name="title" style="height:20px; border-radius: 4px;" required><br><br>
 
-        <label for="due_date" style="width: 50%;margin: 10px;">Due Date:</label>
-        <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;width: 50%;"><br><br>
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;text-align: center;"><br><br>
 
-        <label for="description" style="width: 50%; margin: 10px;">Description:</label><br>
+        <label for="description">Description:</label><br>
         <textarea id="description" name="description" rows="4" cols="50" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;"></textarea><br><br>
 
-        <button type="submit" id="addTaskButton" style="width: 30%; height:30px; border-radius: 10px; cursor: pointer; margin-top:10px;">
+        <button type="submit" id="addTaskButton" style="height: 30px;cursor: pointer;">
           Add Task
         </button>
         <button type="button" id="closeFormBtn" style="margin-top:10px;">Close</button>
@@ -142,7 +142,9 @@ const loadData = async () => {
     flex-direction: column;
     font-size: larger;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
+    // border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     box-sizing: border-box;
     width: 100%; /* kolonun tamamını kaplasın */
   ">
@@ -158,7 +160,7 @@ const loadData = async () => {
     <div id="title" style="padding: 10px; text-align: start">${title}</div>
     <div id="desc" style="text-align: end; padding: 10px">${description}</div>
     <div id="icon-container" style="display: flex; flex-direction: row; margin: 5px">
-      <img src="/images/check_.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
+      <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
       <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
         task.id
       })"/>
