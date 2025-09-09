@@ -32,7 +32,7 @@ const handleAdd = () => {
         <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;text-align: center;"><br><br>
 
         <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;"></textarea><br><br>
+        <textarea id="description" name="description" rows="4" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;width: 100%"></textarea><br><br>
 
         <button type="submit" id="addTaskButton" style="height: 30px;cursor: pointer;">
           Add Task
