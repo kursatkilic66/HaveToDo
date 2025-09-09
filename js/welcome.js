@@ -205,7 +205,7 @@ const loadData = async () => {
       <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
         task.id
       })"/>
-      <p id="done" style="width: 50%; text-align: center">${showDone}</p>
+      <p id="done" style="width: 50%; text-align: center">${showDone(task)}</p>
     </div>
   </div>`;
       taskContainer.appendChild(taskDiv);
