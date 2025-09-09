@@ -256,14 +256,14 @@ const handleCheck = (checkIcon) => {
   const done = taskDiv.querySelector("#done");
 
   // Toggle kontrolü
-  const isDone = done.innerText === "true";
+  const isDone = done.innerText === "Tamamlandı";
 
   if (!isDone) {
     // Görev tamamlandı
     due_date.style.textDecoration = "line-through";
     title.style.textDecoration = "line-through";
     desc.style.textDecoration = "line-through";
-    done.innerText = "true";
+    done.innerText = "Tamamlandı";
 
     // Check iconunu close iconu ile değiştir
     checkIcon.src = "/images/close.svg";
@@ -272,10 +272,10 @@ const handleCheck = (checkIcon) => {
     due_date.style.textDecoration = "none";
     title.style.textDecoration = "none";
     desc.style.textDecoration = "none";
-    done.innerText = "false";
+    done.innerText = "Tamamlanmadı";
 
     // Close iconunu tekrar check iconu ile değiştir
-    checkIcon.src = "/images/check_.svg";
+    checkIcon.src = "/images/dark-check.svg";
   }
   // close, delete’ten önce görünsün
 };
