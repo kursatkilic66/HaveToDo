@@ -10,43 +10,47 @@
       form {
         display: flex;
         flex-direction: column;
-        width: 500px;
-        height: 50%;
+        width: 90%; /* 📱 Telefon ekranında neredeyse tam genişlik */
+        max-width: 400px; /* 💻 PC’de genişlemesin */
         background-color: #f9f4ef;
 
-        margin: auto;
-        gap: 10px;
+        margin: 40px auto; /* Ortala */
+        gap: 15px;
 
-        border-radius: 5px;
+        border-radius: 10px;
 
         font-family: Arial, sans-serif;
-        font-size: larger;
+        font-size: 1rem;
         padding: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box; /* Taşmayı önle */
       }
+
       label {
-        margin-bottom: 5px;
         font-weight: bold;
         color: #333;
       }
+
       input {
-        padding: 10px;
+        padding: 12px;
         border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
+        border-radius: 6px;
+        font-size: 1rem;
         width: 100%;
         box-sizing: border-box;
       }
+
       button {
-        padding: 10px;
+        padding: 12px;
         background-color: #333;
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 1rem;
         margin-top: 10px;
       }
+
       button:hover {
         background-color: #555;
         transition: 0.3s ease;
