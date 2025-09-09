@@ -17,12 +17,14 @@
         border: burlywood solid 2px;
         border-radius: 10px;
         padding: 20px;
-        width: 30%;
-        height: 500px;
+        width: 90%; /* 📱 Telefonda ekranın %90'ı */
+        max-width: 400px; /* 💻 PC’de çok geniş olmasın */
+        height: auto; /* 📱 İçeriğe göre yükseklik */
         background-color: aliceblue;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: larger;
+        font-size: 1rem; /* Daha esnek font */
         z-index: 1000;
+        box-sizing: border-box; /* taşmayı önle */
       "
       id="taskForm"
     >
@@ -57,7 +59,6 @@
           border: solid 2px;
           border-radius: 4px;
           box-sizing: border-box;
-          
         "
       ></textarea>
 

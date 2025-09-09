@@ -1,5 +1,4 @@
-  const BASE_URL = "https://havetodoonline-production.up.railway.app";   
-
+const BASE_URL = "https://havetodoonline-production.up.railway.app";
 
 const handleAdd = () => {
   // Eğer form zaten varsa yeni form açma
@@ -7,38 +6,76 @@ const handleAdd = () => {
 
   const taskForm = document.createElement("div");
   taskForm.id = "taskFormOverlay"; // formu tekil olarak tanımlıyoruz
+  // taskForm.innerHTML = `
+  //   <form id="taskForm" style="
+  //       position: fixed;
+  //       top: 50%;
+  //       left: 50%;
+  //       transform: translate(-50%, -50%);
+  //       display: flex;
+  //       flex-direction: column;
+  //       border: burlywood solid 2px;
+  //       border-radius: 10px;
+  //       padding: 20px;
+  //       width: 30%;
+  //       height: 500px;
+  //       background-color: aliceblue;
+  //       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  //       font-size: larger;
+  //       z-index: 1000;
+  //     ">
+  //       <label for="title" style="padding: 10px;">Task Name:</label>
+  //       <input type="text" id="taskName" name="title" style="height:20px; border-radius: 4px;" required><br><br>
+
+  //       <label for="due_date">Due Date:</label>
+  //       <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;text-align: center;"><br><br>
+
+  //       <label for="description">Description:</label><br>
+  //       <textarea id="description" name="description" rows="4" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;width: 100%"></textarea><br><br>
+
+  //       <button type="submit" id="addTaskButton" style="height: 30px;cursor: pointer;">
+  //         Add Task
+  //       </button>
+  //       <button type="button" id="closeFormBtn" style="margin-top:10px;">Close</button>
+  //   </form>
+  // `;
   taskForm.innerHTML = `
     <form id="taskForm" style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        border: burlywood solid 2px;
-        border-radius: 10px;
-        padding: 20px;
-        width: 30%;
-        height: 500px;
-        background-color: aliceblue;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: larger;
-        z-index: 1000;
-      ">
-        <label for="title" style="padding: 10px;">Task Name:</label>
-        <input type="text" id="taskName" name="title" style="height:20px; border-radius: 4px;" required><br><br>
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  border: burlywood solid 2px;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;          /* 📱 Telefonda ekranın %90'ı */
+  max-width: 400px;    /* 💻 PC’de çok geniş olmasın */
+  height: auto;        /* 📱 İçeriğe göre yükseklik */
+  background-color: aliceblue;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;     /* Daha esnek font */
+  z-index: 1000;
+  box-sizing: border-box; /* taşmayı önle */
+">
+  <label for="title" style="padding: 10px 0;">Task Name:</label>
+  <input type="text" id="taskName" name="title" style="height:40px; border-radius: 4px; padding:5px;" required>
 
-        <label for="due_date">Due Date:</label>
-        <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;text-align: center;"><br><br>
+  <label for="due_date" style="padding: 10px 0;">Due Date:</label>
+  <input type="date" id="dueDate" name="due_date" required style="height: 40px; border-radius: 4px; text-align: center;">
 
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;width: 100%"></textarea><br><br>
+  <label for="description" style="padding: 10px 0;">Description:</label>
+  <textarea id="description" name="description" rows="4" required
+    style="border: solid 2px; border-radius: 4px; width: 100%; padding:5px;"></textarea>
 
-        <button type="submit" id="addTaskButton" style="height: 30px;cursor: pointer;">
-          Add Task
-        </button>
-        <button type="button" id="closeFormBtn" style="margin-top:10px;">Close</button>
-    </form>
+  <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer;">
+    Add Task
+  </button>
+  <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px;">
+    Close
+  </button>
+</form>
   `;
 
   document.body.appendChild(taskForm);
@@ -67,23 +104,20 @@ const handleSubmit = async (event) => {
   // }
 
   try {
-    const response = await fetch(
-      `${BASE_URL}/rest/api/task/saveTask`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Basic " +
-            btoa(
-              `${sessionStorage.getItem("email")}:${sessionStorage.getItem(
-                "password"
-              )}`
-            ),
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${BASE_URL}/rest/api/task/saveTask`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic " +
+          btoa(
+            `${sessionStorage.getItem("email")}:${sessionStorage.getItem(
+              "password"
+            )}`
+          ),
+      },
+      body: JSON.stringify(data),
+    });
     console.log("Save task response status:", response.status);
 
     if (response.ok) {
@@ -106,15 +140,12 @@ const loadData = async () => {
   email = sessionStorage.getItem("email");
   pw = sessionStorage.getItem("password");
   try {
-    const response = await fetch(
-      `${BASE_URL}/rest/api/task/myTasks`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Basic " + btoa(`${email}:${pw}`), // email ve password event'ten alınır
-        },
-      }
-    );
+    const response = await fetch(`${BASE_URL}/rest/api/task/myTasks`, {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + btoa(`${email}:${pw}`), // email ve password event'ten alınır
+      },
+    });
     if (!response.ok)
       throw new Error(`Unauthorized or fetch failed: ${email} ${pw}`);
 
@@ -177,18 +208,14 @@ const loadData = async () => {
 const deleteTask = async (taskId) => {
   let email = sessionStorage.getItem("email");
   let pw = sessionStorage.getItem("password");
-  console.log("Deleting task with ID:", taskId,email,pw);
+  console.log("Deleting task with ID:", taskId, email, pw);
   try {
-    const response = await fetch(
-      `${BASE_URL}/rest/api/task/delete/${taskId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: "Basic " + btoa(`${email}:${pw}`)
-        }
-      }
-
-    );
+    const response = await fetch(`${BASE_URL}/rest/api/task/delete/${taskId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Basic " + btoa(`${email}:${pw}`),
+      },
+    });
     if (response.ok) {
       alert("Task deleted successfully!");
       loadData(); // Görev silindikten sonra listeyi güncelle
