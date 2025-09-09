@@ -9,7 +9,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-.login-container {
+/* .login-container {
     background-color: #f9f4ef;
     
     height: 500px;
@@ -90,5 +90,85 @@ body {
     justify-content: center;
     align-content: center;
 
+} */
+ .login-container {
+  background-color: #f9f4ef;
+
+  width: 90%;              /* Telefon ekranına göre */
+  max-width: 450px;        /* PC’de sabit genişlik */
+  min-height: 400px;       /* İçerik arttıkça büyüsün */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  margin: 40px auto;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #6d5b49;
+  box-sizing: border-box;
 }
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.login-info {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.login-button,
+.register-button {
+  display: block;
+  width: 80%;
+  padding: 12px;             /* Yükseklik yerine padding */
+  margin: 10px auto;
+  font-size: 18px;
+  font-weight: bold;
+  color: #6d5b49;
+  background-color: #f9f4ef;
+  border: 2px solid #6d5b49;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-color: #e0d3c1;
+}
+
+.login-button-container,
+.register-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 📱 Mobil uyum */
+@media (max-width: 600px) {
+  .login-title {
+    font-size: 22px;
+  }
+  .login-info {
+    font-size: 16px;
+  }
+  .login-button,
+  .register-button {
+    font-size: 16px;
+    width: 90%;
+    padding: 10px;
+  }
+}
+
 

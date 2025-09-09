@@ -6,40 +6,46 @@ const handleAdd = () => {
 
   const taskForm = document.createElement("div");
   taskForm.id = "taskFormOverlay"; // formu tekil olarak tanımlıyoruz
-  // taskForm.innerHTML = `
-  //   <form id="taskForm" style="
-  //       position: fixed;
-  //       top: 50%;
-  //       left: 50%;
-  //       transform: translate(-50%, -50%);
-  //       display: flex;
-  //       flex-direction: column;
-  //       border: burlywood solid 2px;
-  //       border-radius: 10px;
-  //       padding: 20px;
-  //       width: 30%;
-  //       height: 500px;
-  //       background-color: aliceblue;
-  //       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  //       font-size: larger;
-  //       z-index: 1000;
-  //     ">
-  //       <label for="title" style="padding: 10px;">Task Name:</label>
-  //       <input type="text" id="taskName" name="title" style="height:20px; border-radius: 4px;" required><br><br>
 
-  //       <label for="due_date">Due Date:</label>
-  //       <input type="date" id="dueDate" name="due_date" required style="height: 35px;border-radius: 4px;text-align: center;"><br><br>
+//   taskForm.innerHTML = `
+//     <form id="taskForm" style="
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   display: flex;
+//   flex-direction: column;
+//   border: burlywood solid 2px;
+//   border-radius: 10px;
+//   padding: 20px;
+//   width: 90%;          /* 📱 Telefonda ekranın %90'ı */
+//   max-width: 400px;    /* 💻 PC’de çok geniş olmasın */
+//   height: auto;        /* 📱 İçeriğe göre yükseklik */
+//   background-color: aliceblue;
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   font-size: 1rem;     /* Daha esnek font */
+//   z-index: 1000;
+//   box-sizing: border-box; /* taşmayı önle */
+// ">
+//   <label for="title" style="padding: 10px 0;">Task Name:</label>
+//   <input type="text" id="taskName" name="title" style="height:40px; border-radius: 4px; padding:5px;" required>
 
-  //       <label for="description">Description:</label><br>
-  //       <textarea id="description" name="description" rows="4" required style="max-width: fit-content;border: solid 2px;border-radius: 4px;width: 100%"></textarea><br><br>
+//   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
+//   <input type="date" id="dueDate" name="due_date" required style="height: 40px; border-radius: 4px; text-align: center;">
 
-  //       <button type="submit" id="addTaskButton" style="height: 30px;cursor: pointer;">
-  //         Add Task
-  //       </button>
-  //       <button type="button" id="closeFormBtn" style="margin-top:10px;">Close</button>
-  //   </form>
-  // `;
-  taskForm.innerHTML = `
+//   <label for="description" style="padding: 10px 0;">Description:</label>
+//   <textarea id="description" name="description" rows="4" required
+//     style="border: solid 2px; border-radius: 4px; width: 100%; padding:5px;"></textarea>
+
+//   <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer;">
+//     Add Task
+//   </button>
+//   <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px;">
+//     Close
+//   </button>
+// </form>
+//   `;
+taskForm.innerHTML = `
     <form id="taskForm" style="
   position: fixed;
   top: 50%;
@@ -50,31 +56,35 @@ const handleAdd = () => {
   border: burlywood solid 2px;
   border-radius: 10px;
   padding: 20px;
-  width: 90%;          /* 📱 Telefonda ekranın %90'ı */
-  max-width: 400px;    /* 💻 PC’de çok geniş olmasın */
-  height: auto;        /* 📱 İçeriğe göre yükseklik */
+  width: 90%;
+  max-width: 400px;
+  height: auto;
   background-color: aliceblue;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;     /* Daha esnek font */
+  font-size: 1rem;
   z-index: 1000;
-  box-sizing: border-box; /* taşmayı önle */
+  box-sizing: border-box;
 ">
+
   <label for="title" style="padding: 10px 0;">Task Name:</label>
-  <input type="text" id="taskName" name="title" style="height:40px; border-radius: 4px; padding:5px;" required>
+  <input type="text" id="taskName" name="title" required 
+         style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
-  <input type="date" id="dueDate" name="due_date" required style="height: 40px; border-radius: 4px; text-align: center;">
+  <input type="date" id="dueDate" name="due_date" required 
+         style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="description" style="padding: 10px 0;">Description:</label>
   <textarea id="description" name="description" rows="4" required
-    style="border: solid 2px; border-radius: 4px; width: 100%; padding:5px;"></textarea>
+            style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
 
-  <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer;">
+  <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
     Add Task
   </button>
-  <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px;">
+  <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
     Close
   </button>
+
 </form>
   `;
 
@@ -195,7 +205,7 @@ const loadData = async () => {
       <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
         task.id
       })"/>
-      <p id="done" style="width: 50%; text-align: center">${done}</p>
+      <p id="done" style="width: 50%; text-align: center">${showDone}</p>
     </div>
   </div>`;
       taskContainer.appendChild(taskDiv);
@@ -204,6 +214,15 @@ const loadData = async () => {
     console.error("Error fetching tasks:", error);
   }
 };
+
+const showDone = (task) => {
+  const done = task.done;
+  if(done) {
+    return "Tamamlandı";
+  }else {
+    return "Tamamlanmadı";
+  }
+}
 
 const deleteTask = async (taskId) => {
   let email = sessionStorage.getItem("email");
