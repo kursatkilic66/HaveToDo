@@ -1,62 +1,135 @@
 const BASE_URL = "https://havetodoonline-production.up.railway.app";
 
+// const handleAdd = () => {
+//   // Eğer form zaten varsa yeni form açma
+//   if (document.getElementById("taskFormOverlay")) return;
+//   const taskForm = document.createElement("div");
+//   taskForm.id = "taskFormOverlay";
+//   taskForm.innerHTML = `
+//     <form id="taskForm" style="
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   display: flex;
+//   flex-direction: column;
+//   border: burlywood solid 2px;
+//   border-radius: 10px;
+//   padding: 20px;
+//   width: 90%;
+//   max-width: 400px;
+//   height: auto;
+//   background-color: rgb(242, 214, 168);
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   font-size: 1rem;
+//   z-index: 1000;
+//   box-sizing: border-box;
+// ">
+
+//   <label for="title" style="padding: 10px 0;">Task Name:</label>
+//   <input type="text" id="taskName" name="title" required maxlength="30"
+//          style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
+
+//   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
+//   <input type="date" id="dueDate" name="due_date" required
+//          style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
+
+//   <label for="description" style="padding: 10px 0;">Description:</label>
+//   <textarea id="description" name="description" rows="4" required maxlength="250"
+//             style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
+
+//   <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
+//     Add Task
+//   </button>
+//   <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
+//     Close
+//   </button>
+// </form>
+//   `
+//   <script>
+//         const today = new Date();
+//         const yyyy = today.getFullYear();
+//         const mm = String(today.getMonth() + 1).padStart(2, "0"); // Aylar 0-11 arası
+//         const dd = String(today.getDate()).padStart(2, "0");
+//         const todayStr = `${yyyy}-${mm}-${dd}`;
+//         document.getElementById("dueDate").setAttribute("min", todayStr);
+//   </script>
+//   ;
+  
+
+//   document.body.appendChild(taskForm);
+
+//   // Form kapatma butonu
+//   document.getElementById("closeFormBtn").addEventListener("click", () => {
+//     taskForm.remove();
+//   });
+
+//   // Submit eventini bağla
+//   document.getElementById("taskForm").addEventListener("submit", handleSubmit);
+// };
 const handleAdd = () => {
   // Eğer form zaten varsa yeni form açma
   if (document.getElementById("taskFormOverlay")) return;
+
   const taskForm = document.createElement("div");
   taskForm.id = "taskFormOverlay";
+  taskForm.style = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  `;
+
   taskForm.innerHTML = `
     <form id="taskForm" style="
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  border: burlywood solid 2px;
-  border-radius: 10px;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  height: auto;
-  background-color: rgb(242, 214, 168);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;
-  z-index: 1000;
-  box-sizing: border-box;
-">
+      display: flex;
+      flex-direction: column;
+      border: burlywood solid 2px;
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      background-color: rgb(242, 214, 168);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1rem;
+      box-sizing: border-box;
+    ">
+      <label for="taskName" style="padding: 10px 0;">Task Name:</label>
+      <input type="text" id="taskName" name="title" required maxlength="30"
+             style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
-  <label for="title" style="padding: 10px 0;">Task Name:</label>
-  <input type="text" id="taskName" name="title" required maxlength="30"
-         style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
+      <label for="dueDate" style="padding: 10px 0;">Due Date:</label>
+      <input type="date" id="dueDate" name="due_date" required
+             style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
-  <label for="due_date" style="padding: 10px 0;">Due Date:</label>
-  <input type="date" id="dueDate" name="due_date" required
-         style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
+      <label for="description" style="padding: 10px 0;">Description:</label>
+      <textarea id="description" name="description" rows="4" required maxlength="250"
+                style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
 
-  <label for="description" style="padding: 10px 0;">Description:</label>
-  <textarea id="description" name="description" rows="4" required maxlength="250"
-            style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
-
-  <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
-    Add Task
-  </button>
-  <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
-    Close
-  </button>
-  <script>
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, "0"); // Aylar 0-11 arası
-        const dd = String(today.getDate()).padStart(2, "0");
-        const todayStr = ${yyyy}-${mm}-${dd};
-        document.getElementById("dueDate").setAttribute("min", todayStr);
-      </script>
-
-</form>
+      <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
+        Add Task
+      </button>
+      <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
+        Close
+      </button>
+    </form>
   `;
 
   document.body.appendChild(taskForm);
+
+  // Min tarihi ayarla
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+  document.getElementById("dueDate").setAttribute("min", todayStr);
 
   // Form kapatma butonu
   document.getElementById("closeFormBtn").addEventListener("click", () => {
@@ -66,6 +139,7 @@ const handleAdd = () => {
   // Submit eventini bağla
   document.getElementById("taskForm").addEventListener("submit", handleSubmit);
 };
+
 
 const handleSubmit = async (event) => {
   event.preventDefault(); // Formun varsayılan submit davranışını engelle
