@@ -3,49 +3,9 @@ const BASE_URL = "https://havetodoonline-production.up.railway.app";
 const handleAdd = () => {
   // Eğer form zaten varsa yeni form açma
   if (document.getElementById("taskFormOverlay")) return;
-
   const taskForm = document.createElement("div");
-  taskForm.id = "taskFormOverlay"; // formu tekil olarak tanımlıyoruz
-
-//   taskForm.innerHTML = `
-//     <form id="taskForm" style="
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   display: flex;
-//   flex-direction: column;
-//   border: burlywood solid 2px;
-//   border-radius: 10px;
-//   padding: 20px;
-//   width: 90%;          /* 📱 Telefonda ekranın %90'ı */
-//   max-width: 400px;    /* 💻 PC’de çok geniş olmasın */
-//   height: auto;        /* 📱 İçeriğe göre yükseklik */
-//   background-color: aliceblue;
-//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//   font-size: 1rem;     /* Daha esnek font */
-//   z-index: 1000;
-//   box-sizing: border-box; /* taşmayı önle */
-// ">
-//   <label for="title" style="padding: 10px 0;">Task Name:</label>
-//   <input type="text" id="taskName" name="title" style="height:40px; border-radius: 4px; padding:5px;" required>
-
-//   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
-//   <input type="date" id="dueDate" name="due_date" required style="height: 40px; border-radius: 4px; text-align: center;">
-
-//   <label for="description" style="padding: 10px 0;">Description:</label>
-//   <textarea id="description" name="description" rows="4" required
-//     style="border: solid 2px; border-radius: 4px; width: 100%; padding:5px;"></textarea>
-
-//   <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer;">
-//     Add Task
-//   </button>
-//   <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px;">
-//     Close
-//   </button>
-// </form>
-//   `;
-taskForm.innerHTML = `
+  taskForm.id = "taskFormOverlay";
+  taskForm.innerHTML = `
     <form id="taskForm" style="
   position: fixed;
   top: 50%;
@@ -59,7 +19,7 @@ taskForm.innerHTML = `
   width: 90%;
   max-width: 400px;
   height: auto;
-  background-color: aliceblue;
+  background-color: rgb(242, 214, 168);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
   z-index: 1000;
@@ -67,11 +27,11 @@ taskForm.innerHTML = `
 ">
 
   <label for="title" style="padding: 10px 0;">Task Name:</label>
-  <input type="text" id="taskName" name="title" required 
+  <input type="text" id="taskName" name="title" required
          style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
-  <input type="date" id="dueDate" name="due_date" required 
+  <input type="date" id="dueDate" name="due_date" required
          style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="description" style="padding: 10px 0;">Description:</label>
@@ -105,13 +65,6 @@ const handleSubmit = async (event) => {
   const formData = new FormData(taskForm);
   const data = Object.fromEntries(formData.entries());
   console.log("Gönderilen Data:", data);
-
-  // Token'ı localStorage veya global değişkenden al
-  // const token = localStorage.getItem("jwtToken");
-  // if (!token) {
-  //   alert("User not authenticated. Please log in.");
-  //   return;
-  // }
 
   try {
     const response = await fetch(`${BASE_URL}/rest/api/task/saveTask`, {
@@ -176,38 +129,111 @@ const loadData = async () => {
       const done = task.done;
 
       taskDiv.className = "task-item";
+      //     taskDiv.innerHTML = `
+      //       <div style="
+      //   background-color: #f3ddbaff;
+      //   display: flex;
+      //   flex-direction: column;
+      //   font-size: larger;
+      //   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      //   // border-radius: 10px;
+      //   border-bottom-left-radius: 10px;
+      //   border-bottom-right-radius: 10px;
+      //   box-sizing: border-box;
+      //   width: 100%; /* kolonun tamamını kaplasın */
+      // ">
+      //   <div id="due_date" style="
+      //     text-align: center;
+      //     border: solid 2px;
+      //     padding: 10px;
+      //     border-bottom-left-radius: 10px;
+      //     border-bottom-right-radius: 10px;
+      //   ">
+      //     ${due_date.toLocaleDateString("en-GB")}
+      //   </div>
+      //   <div id="title" style="padding: 10px; text-align: start">${title}</div>
+      //   <div id="desc" style="text-align: end; padding: 10px">${description}</div>
+      //   <div id="icon-container" style="display: flex; flex-direction: row; margin: 5px">
+      //     <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
+      //     <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
+      //       task.id
+      //     })"/>
+      //     <p id="done" style="text-align: center">${showDone(task)}</p>
+      //   </div>
+      // </div>`;
       taskDiv.innerHTML = `
-        <div style="
+      <div style="
     background-color: #f3ddbaff;
     display: flex;
     flex-direction: column;
     font-size: larger;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    // border-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
     box-sizing: border-box;
-    width: 100%; /* kolonun tamamını kaplasın */
+    width: 100%;
+    min-height: 180px;       /* mobilde minimum yükseklik */
+    max-height: 220px;       /* çok uzun olursa taşmasın */
+    overflow: hidden;
+    margin: 0.5rem 0;
   ">
-    <div id="due_date" style="
+  
+  <!-- Due Date -->
+  <div id="due_date" style="
       text-align: center;
       border: solid 2px;
-      padding: 10px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
+      padding: 0.5rem;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-color: #e0d4b7ff;
+      flex: 0 0 auto;
     ">
-      ${due_date.toLocaleDateString("en-GB")}
-    </div>
-    <div id="title" style="padding: 10px; text-align: start">${title}</div>
-    <div id="desc" style="text-align: end; padding: 10px">${description}</div>
-    <div id="icon-container" style="display: flex; flex-direction: row; margin: 5px">
-      <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
-      <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
-        task.id
-      })"/>
-      <p id="done" style="width: 50%; text-align: center">${showDone(task)}</p>
-    </div>
-  </div>`;
+    ${due_date.toLocaleDateString("en-GB")}
+  </div>
+
+  <!-- Title -->
+  <div id="title" style="
+      padding: 0.5rem;
+      font-weight: bold;
+      text-align: start;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 0 0 auto;
+    ">
+    ${title}
+  </div>
+
+  <!-- Description -->
+  <div id="desc" style="
+      text-align: start;
+      padding: 0.5rem;
+      flex: 1 1 auto;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;   /* en fazla 2 satır göster */
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+    " onclick="handleDesc(this.innerText)">
+    ${description}
+  </div>
+
+  <!-- Icon Container -->
+  <div id="icon-container" style="
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: auto;         /* ikonlar hep altta */
+      padding: 0.5rem 0;
+    ">
+    <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
+    <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" <!--onclick="deleteTask(${
+      task.id
+    })"-->/>
+    <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
+  </div>
+</div>
+      `;
       taskContainer.appendChild(taskDiv);
     });
   } catch (error) {
@@ -217,12 +243,12 @@ const loadData = async () => {
 
 const showDone = (task) => {
   const done = task.done;
-  if(done) {
+  if (done) {
     return "Tamamlandı";
-  }else {
+  } else {
     return "Tamamlanmadı";
   }
-}
+};
 
 const deleteTask = async (taskId) => {
   let email = sessionStorage.getItem("email");
@@ -236,7 +262,7 @@ const deleteTask = async (taskId) => {
       },
     });
     if (response.ok) {
-      alert("Task deleted successfully!");
+      // alert("Task deleted successfully!");
       loadData(); // Görev silindikten sonra listeyi güncelle
     } else {
       alert("Failed to delete task.");
@@ -279,6 +305,52 @@ const handleCheck = (checkIcon) => {
   }
   // close, delete’ten önce görünsün
 };
-// document.getElementById("checkButton").addEventListener("click", handleCheck);
+
+const handleDesc = (desc) => {
+  const container = document.createElement("div");
+  const alreadyOpen = document.querySelector(".desc-container");
+  if (alreadyOpen) alreadyOpen.remove();
+  container.className = "desc-container";
+  container.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f3ddbaff;
+      border: solid 2px burlywood;
+      border-radius: 10px;
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      max-height: 80vh;       /* ekranın %80'i kadar */
+      overflow-y: auto;       /* dikey scroll varsa çık */
+      overflow-x: hidden;     /* yatay scroll yok */
+      z-index: 1000;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+      <div style="
+        white-space: pre-wrap;   /* satır sonlarını koru ve kelime kır */
+        word-break: break-word;   /* uzun kelimeleri satırda kır */
+      ">${desc}</div>
+      <button id="closeDescBtn" style="
+        margin-top: 15px;
+        height: 40px;
+        cursor: pointer;
+        width: 50%;
+        max-width: 150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      ">Close</button>
+    </div>
+  `;
+  document.body.appendChild(container);
+
+  document.getElementById("closeDescBtn").addEventListener("click", () => {
+    container.remove();
+  });
+};
 
 window.addEventListener("DOMContentLoaded", loadData);

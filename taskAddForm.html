@@ -17,10 +17,10 @@
         border: burlywood solid 2px;
         border-radius: 10px;
         padding: 20px;
-        width: 90%; /* 📱 Telefonda ekranın %90'ı */
-        max-width: 400px; /* 💻 PC’de çok geniş olmasın */
-        height: auto; /* 📱 İçeriğe göre yükseklik */
-        background-color: aliceblue;
+        width: 90%;
+        max-width: 400px; 
+        height: auto; 
+        background-color: rgb(242, 214, 168);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 1rem; /* Daha esnek font */
         z-index: 1000;
@@ -35,6 +35,7 @@
         name="taskName"
         style="width: 50%; height: 20px; border-radius: 4px"
         required
+        maxlength="30"
       /><br /><br />
 
       <label for="dueDate" style="width: 50%; margin: 10px">Due Date:</label>
@@ -45,6 +46,14 @@
         required
         style="height: 35px; border-radius: 4px; width: 50%; border: solid 2px"
       /><br /><br />
+      <script>
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0"); // Aylar 0-11 arası
+        const dd = String(today.getDate()).padStart(2, "0");
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        document.getElementById("dueDate").setAttribute("min", todayStr);
+      </script>
 
       <label for="description" style="width: 50%; margin: 10px"
         >Description:</label

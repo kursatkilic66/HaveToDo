@@ -1,4 +1,3 @@
-
   const BASE_URL = "https://havetodoonline-production.up.railway.app";   
 
   document.getElementById("register-button-id").addEventListener("click", () => {
@@ -29,10 +28,6 @@
     })
     .catch((error) => console.error("Error loading login.html:", error));
   });
-    
-
-
-  
 
 const registerUser = async () => {
   const user = {
@@ -61,29 +56,6 @@ const registerUser = async () => {
 
     const savedUser = await res.json();
     console.log("Backend response:", savedUser);
-
-    // Otomatik login için token al
-    // const loginRes = await fetch("http://localhost:8080/rest/api/user/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email: user.email, password: user.password }),
-    // });
-
-    // if (!loginRes.ok) {
-    //   const errText = await loginRes.text();
-    //   console.error("Login hatası:", errText);
-    //   alert("Login failed after registration!");
-    //   return;
-    // }
-
-    // const loginData = await loginRes.json();
-    // const token = loginData.token; // Backend’in döndürdüğü JWT
-    // localStorage.setItem("jwtToken", token); // Token’ı sakla
-    // console.log("JWT token kaydedildi:", token);
-
-    // Ana sayfaya yönlendir
-    //window.location.href = "http://127.0.0.1:3000/welcome.html";
-    //alert("Registration successful!\nPlease log in.");
     sessionStorage.setItem("email", user.email);
     sessionStorage.setItem("password", user.password);
     //goHome();
@@ -95,7 +67,7 @@ const registerUser = async () => {
 };
 
 const loginUser = async (event) => {
-  //event.preventDefault();
+  
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -113,11 +85,7 @@ const loginUser = async (event) => {
     console.log("Login response status:", response.status);
 
     if (response.ok) {
-      // const token = await response.text(); // plain text JWT al
-      // localStorage.setItem("jwtToken", token); // token’ı sakla
-      //alert("Login successful!");
       window.location.href = "welcome.html";
-      //loadData(); // yönlendir
     } else {
       const errText = await response.text();
       console.error("Login failed:", errText);
