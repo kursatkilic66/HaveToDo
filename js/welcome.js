@@ -114,15 +114,16 @@ const handleSubmit = async (event) => {
 const loadData = async () => {
   const taskContainer = document.getElementById("welcome_task_container");
 
+  // Task container stilini JS ile
   Object.assign(taskContainer.style, {
     display: "flex",
     flexWrap: "wrap",
-    gap: "1rem",
-    justifyContent: "flex-start", // space-between yerine flex-start
+    gap: "0.5rem",
+    justifyContent: "flex-start",
     overflowY: "auto",
     overflowX: "hidden",
     maxHeight: "80vh",
-    padding: "1rem",
+    // padding: "1rem",
     boxSizing: "border-box",
   });
 
@@ -142,14 +143,13 @@ const loadData = async () => {
 
     tasks.forEach((task) => {
       const due_date = new Date(task.due_date);
-      
-
       const taskDiv = document.createElement("div");
       taskDiv.className = "task-item";
 
+      // Sabit width ve responsive için min-width:0 kritik
       Object.assign(taskDiv.style, {
-        flex: "0 0 calc(33.33% - 0.66rem)", // genişlik sabit
-        minWidth: "0", // overflow ve ellipsis için kritik
+        flex: "0 0 calc(33.33% - 0.33rem)",
+        minWidth: "0",
         minHeight: "180px",
         maxHeight: "220px",
         backgroundColor: "#f3ddbaff",
@@ -157,57 +157,47 @@ const loadData = async () => {
         flexDirection: "column",
         borderRadius: "10px",
         boxSizing: "border-box",
+        overflow: "hidden",
       });
 
       taskDiv.innerHTML = `
-        <div id="due_date" style="
-          text-align: center;
-          border: solid 2px;
-          padding: 0.5rem;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          background-color: #e0d4b7ff;
-          flex: 0 0 auto;
-        ">${due_date.toLocaleDateString("en-GB")}</div>
-
-        <div id="title" style="
-          padding: 0.5rem;
-          font-weight: bold;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          flex: 0 0 auto;
-        ">${task.title}</div>
-
-        <div id="desc" style="
-          padding: 0.5rem;
-          flex: 1 1 auto;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        " onclick="handleDesc(this.innerText)">
+        <div id="due_date" style="text-align:center; border:2px solid; border-radius:10px 10px 0 0; background-color:#e0d4b7ff; padding:0.5rem; flex:0 0 auto;">
+          ${due_date.toLocaleDateString("en-GB")}
+        </div>
+        <div id="title" style="padding:0.5rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:0 0 auto;">
+          ${task.title}
+        </div>
+        <div id="desc" style="padding:0.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1 1 auto;" onclick="handleDesc(this.innerText)">
           ${task.description}
         </div>
-
-        <div id="icon-container" style="
-          display: flex;
-          justify-content: center;
-          gap: 1rem;
-          margin-top: auto;
-          padding: 0.5rem 0;
-        ">
-          <img src="/images/dark-check.svg" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
-          <img src="/images/delete.svg" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${task.id})" />
-          <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
+        <div id="icon-container" style="display:flex; justify-content:center; gap:1rem; margin-top:auto; padding:0.5rem 0;">
+          <img src="/images/dark-check.svg" alt="check" style="width:20px; height:20px; cursor:pointer;" onclick="handleCheck(this)" />
+          <img src="/images/delete.svg" alt="delete" style="width:20px; height:20px; cursor:pointer;" onclick="deleteTask(${task.id})" />
+          <p id="done" style="text-align:center; margin:0;">${showDone(task)}</p>
         </div>
       `;
 
       taskContainer.appendChild(taskDiv);
     });
+
+    // Responsive: JS ile
+    const resizeTasks = () => {
+      const width = window.innerWidth;
+      document.querySelectorAll(".task-item").forEach((item) => {
+        if (width <= 600) item.style.flex = "0 0 100%"; // mobil: 1 per row
+        else if (width <= 1200) item.style.flex = "0 0 calc(50% - 0.25rem)"; // tablet: 2 per row
+        else item.style.flex = "0 0 calc(33.33% - 0.33rem)"; // desktop: 3 per row
+      });
+    };
+
+    resizeTasks();
+    window.addEventListener("resize", resizeTasks);
+
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
 };
+
 
 
 
