@@ -27,7 +27,7 @@ const handleAdd = () => {
 ">
 
   <label for="title" style="padding: 10px 0;">Task Name:</label>
-  <input type="text" id="taskName" name="title" required
+  <input type="text" id="taskName" name="title" required maxlength="30"
          style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
@@ -35,7 +35,7 @@ const handleAdd = () => {
          style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
 
   <label for="description" style="padding: 10px 0;">Description:</label>
-  <textarea id="description" name="description" rows="4" required
+  <textarea id="description" name="description" rows="4" required maxlength="250"
             style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
 
   <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
@@ -44,6 +44,14 @@ const handleAdd = () => {
   <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
     Close
   </button>
+  <script>
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0"); // Aylar 0-11 arası
+        const dd = String(today.getDate()).padStart(2, "0");
+        const todayStr = ${yyyy}-${mm}-${dd};
+        document.getElementById("dueDate").setAttribute("min", todayStr);
+      </script>
 
 </form>
   `;
@@ -227,9 +235,9 @@ const loadData = async () => {
       padding: 0.5rem 0;
     ">
     <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
-    <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" <!--onclick="deleteTask(${
+    <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${
       task.id
-    })"-->/>
+    })" />
     <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
   </div>
 </div>
