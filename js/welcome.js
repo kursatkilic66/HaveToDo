@@ -73,7 +73,6 @@ const handleAdd = () => {
   document.getElementById("taskForm").addEventListener("submit", handleSubmit);
 };
 
-
 const handleSubmit = async (event) => {
   event.preventDefault(); // Formun varsayılan submit davranışını engelle
   const taskForm = document.getElementById("taskForm");
@@ -154,7 +153,7 @@ const loadData = async () => {
 
       taskDiv.className = "task-item";
 
-taskDiv.innerHTML = `
+      taskDiv.innerHTML = `
   <div style="
     background-color: #f3ddbaff;
     display: flex;
@@ -217,12 +216,13 @@ taskDiv.innerHTML = `
         padding: 0.5rem 0;
     ">
       <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
-      <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${task.id})" />
+      <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${
+        task.id
+      })" />
       <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
     </div>
   </div>
 `;
-
 
       taskContainer.appendChild(taskDiv);
     });
@@ -230,7 +230,6 @@ taskDiv.innerHTML = `
     console.error("Error fetching tasks:", error);
   }
 };
-
 
 // const loadData = async () => {
 //   const taskContainer = document.getElementById("welcome_task_container");
@@ -310,7 +309,7 @@ taskDiv.innerHTML = `
 //     overflow: hidden;
 //     margin: 0.5rem 0;
 //   ">
-  
+
 //   <!-- Due Date -->
 //   <div id="due_date" style="
 //       text-align: center;
