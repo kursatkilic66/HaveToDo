@@ -114,15 +114,16 @@ const handleSubmit = async (event) => {
 const loadData = async () => {
   const taskContainer = document.getElementById("welcome_task_container");
 
-  // Task container stilini güncelle
   Object.assign(taskContainer.style, {
     display: "flex",
     flexWrap: "wrap",
     gap: "1rem",
-    justifyContent: "space-between",
-    overflowY: "auto", // dikey scroll
+    justifyContent: "flex-start", // space-between yerine flex-start
+    overflowY: "auto",
+    overflowX: "hidden",
     maxHeight: "80vh",
     padding: "1rem",
+    boxSizing: "border-box",
   });
 
   const email = sessionStorage.getItem("email");
@@ -141,14 +142,14 @@ const loadData = async () => {
 
     tasks.forEach((task) => {
       const due_date = new Date(task.due_date);
+      
 
       const taskDiv = document.createElement("div");
       taskDiv.className = "task-item";
 
-      // Task item stilleri
       Object.assign(taskDiv.style, {
-        flex: "1 1 calc(33.33% - 0.66rem)", // 3 eşit parça
-        minWidth: "0", // overflow:hidden ile ellipsis çalışması için kritik
+        flex: "0 0 calc(33.33% - 0.66rem)", // genişlik sabit
+        minWidth: "0", // overflow ve ellipsis için kritik
         minHeight: "180px",
         maxHeight: "220px",
         backgroundColor: "#f3ddbaff",
@@ -156,12 +157,10 @@ const loadData = async () => {
         flexDirection: "column",
         borderRadius: "10px",
         boxSizing: "border-box",
-        margin: "0.33rem",
       });
 
       taskDiv.innerHTML = `
-        <!-- Due Date -->
-        <div style="
+        <div id="due_date" style="
           text-align: center;
           border: solid 2px;
           padding: 0.5rem;
@@ -171,8 +170,7 @@ const loadData = async () => {
           flex: 0 0 auto;
         ">${due_date.toLocaleDateString("en-GB")}</div>
 
-        <!-- Title -->
-        <div style="
+        <div id="title" style="
           padding: 0.5rem;
           font-weight: bold;
           white-space: nowrap;
@@ -181,8 +179,7 @@ const loadData = async () => {
           flex: 0 0 auto;
         ">${task.title}</div>
 
-        <!-- Description -->
-        <div style="
+        <div id="desc" style="
           padding: 0.5rem;
           flex: 1 1 auto;
           white-space: nowrap;
@@ -192,8 +189,7 @@ const loadData = async () => {
           ${task.description}
         </div>
 
-        <!-- Icon Container -->
-        <div style="
+        <div id="icon-container" style="
           display: flex;
           justify-content: center;
           gap: 1rem;
@@ -212,6 +208,7 @@ const loadData = async () => {
     console.error("Error fetching tasks:", error);
   }
 };
+
 
 
 // const loadData = async () => {
