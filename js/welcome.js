@@ -198,7 +198,7 @@ const loadData = async () => {
         ">
           <img src="/images/dark-check.svg" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
           <img src="/images/delete.svg" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${task.id})" />
-          <p style="text-align: center; margin: 0;">${showDone(task)}</p>
+          <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
         </div>
       `;
 
