@@ -1,72 +1,5 @@
 const BASE_URL = "https://havetodoonline-production.up.railway.app";
 
-// const handleAdd = () => {
-//   // Eğer form zaten varsa yeni form açma
-//   if (document.getElementById("taskFormOverlay")) return;
-//   const taskForm = document.createElement("div");
-//   taskForm.id = "taskFormOverlay";
-//   taskForm.innerHTML = `
-//     <form id="taskForm" style="
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   display: flex;
-//   flex-direction: column;
-//   border: burlywood solid 2px;
-//   border-radius: 10px;
-//   padding: 20px;
-//   width: 90%;
-//   max-width: 400px;
-//   height: auto;
-//   background-color: rgb(242, 214, 168);
-//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//   font-size: 1rem;
-//   z-index: 1000;
-//   box-sizing: border-box;
-// ">
-
-//   <label for="title" style="padding: 10px 0;">Task Name:</label>
-//   <input type="text" id="taskName" name="title" required maxlength="30"
-//          style="height:40px; border-radius: 4px; padding:5px; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
-
-//   <label for="due_date" style="padding: 10px 0;">Due Date:</label>
-//   <input type="date" id="dueDate" name="due_date" required
-//          style="height: 40px; border-radius: 4px; text-align: center; width: 90%; max-width: 300px; display: block; margin: 0 auto;">
-
-//   <label for="description" style="padding: 10px 0;">Description:</label>
-//   <textarea id="description" name="description" rows="4" required maxlength="250"
-//             style="border: solid 2px; border-radius: 4px; width: 90%; max-width: 300px; padding:5px; display: block; margin: 0 auto;"></textarea>
-
-//   <button type="submit" id="addTaskButton" style="margin-top:15px; height: 40px; cursor: pointer; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
-//     Add Task
-//   </button>
-//   <button type="button" id="closeFormBtn" style="margin-top:10px; height: 40px; width: 50%; max-width: 150px; margin-left:auto; margin-right:auto;">
-//     Close
-//   </button>
-// </form>
-//   `
-//   <script>
-//         const today = new Date();
-//         const yyyy = today.getFullYear();
-//         const mm = String(today.getMonth() + 1).padStart(2, "0"); // Aylar 0-11 arası
-//         const dd = String(today.getDate()).padStart(2, "0");
-//         const todayStr = `${yyyy}-${mm}-${dd}`;
-//         document.getElementById("dueDate").setAttribute("min", todayStr);
-//   </script>
-//   ;
-  
-
-//   document.body.appendChild(taskForm);
-
-//   // Form kapatma butonu
-//   document.getElementById("closeFormBtn").addEventListener("click", () => {
-//     taskForm.remove();
-//   });
-
-//   // Submit eventini bağla
-//   document.getElementById("taskForm").addEventListener("submit", handleSubmit);
-// };
 const handleAdd = () => {
   // Eğer form zaten varsa yeni form açma
   if (document.getElementById("taskFormOverlay")) return;
@@ -179,18 +112,29 @@ const handleSubmit = async (event) => {
     alert("Error adding task. See console for details.");
   }
 };
-
 const loadData = async () => {
   const taskContainer = document.getElementById("welcome_task_container");
-  email = sessionStorage.getItem("email");
-  pw = sessionStorage.getItem("password");
+
+  // Task container stilini güncelle
+  taskContainer.style.display = "flex";
+  taskContainer.style.flexWrap = "wrap";
+  taskContainer.style.gap = "1rem";
+  taskContainer.style.justifyContent = "space-between";
+  taskContainer.style.overflowY = "auto"; // dikey scroll
+  taskContainer.style.maxHeight = "80vh"; // isteğe göre ayarlanabilir
+  taskContainer.style.padding = "1rem";
+
+  const email = sessionStorage.getItem("email");
+  const pw = sessionStorage.getItem("password");
+
   try {
     const response = await fetch(`${BASE_URL}/rest/api/task/myTasks`, {
       method: "GET",
       headers: {
-        Authorization: "Basic " + btoa(`${email}:${pw}`), // email ve password event'ten alınır
+        Authorization: "Basic " + btoa(`${email}:${pw}`),
       },
     });
+
     if (!response.ok)
       throw new Error(`Unauthorized or fetch failed: ${email} ${pw}`);
 
@@ -199,129 +143,235 @@ const loadData = async () => {
       taskContainer.innerHTML = "<p>No tasks found.</p>";
       return;
     }
-    taskContainer.innerHTML = ""; // Önceki içeriği temizle
+
+    taskContainer.innerHTML = ""; // Önceki içerik temizle
+
     tasks.forEach((task) => {
       const taskDiv = document.createElement("div");
       const due_date = new Date(task.due_date);
-
       const title = task.title;
-
       const description = task.description;
 
-      const done = task.done;
-
       taskDiv.className = "task-item";
-      //     taskDiv.innerHTML = `
-      //       <div style="
-      //   background-color: #f3ddbaff;
-      //   display: flex;
-      //   flex-direction: column;
-      //   font-size: larger;
-      //   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      //   // border-radius: 10px;
-      //   border-bottom-left-radius: 10px;
-      //   border-bottom-right-radius: 10px;
-      //   box-sizing: border-box;
-      //   width: 100%; /* kolonun tamamını kaplasın */
-      // ">
-      //   <div id="due_date" style="
-      //     text-align: center;
-      //     border: solid 2px;
-      //     padding: 10px;
-      //     border-bottom-left-radius: 10px;
-      //     border-bottom-right-radius: 10px;
-      //   ">
-      //     ${due_date.toLocaleDateString("en-GB")}
-      //   </div>
-      //   <div id="title" style="padding: 10px; text-align: start">${title}</div>
-      //   <div id="desc" style="text-align: end; padding: 10px">${description}</div>
-      //   <div id="icon-container" style="display: flex; flex-direction: row; margin: 5px">
-      //     <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
-      //     <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
-      //       task.id
-      //     })"/>
-      //     <p id="done" style="text-align: center">${showDone(task)}</p>
-      //   </div>
-      // </div>`;
+
       taskDiv.innerHTML = `
       <div style="
-    background-color: #f3ddbaff;
-    display: flex;
-    flex-direction: column;
-    font-size: larger;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 180px;       /* mobilde minimum yükseklik */
-    max-height: 220px;       /* çok uzun olursa taşmasın */
-    overflow: hidden;
-    margin: 0.5rem 0;
-  ">
-  
-  <!-- Due Date -->
-  <div id="due_date" style="
-      text-align: center;
-      border: solid 2px;
-      padding: 0.5rem;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      background-color: #e0d4b7ff;
-      flex: 0 0 auto;
-    ">
-    ${due_date.toLocaleDateString("en-GB")}
-  </div>
+        background-color: #f3ddbaff;
+        display: flex;
+        flex-direction: column;
+        font-size: larger;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border-radius: 10px;
+        box-sizing: border-box;
+        width: calc(33.33% - 0.66rem); /* 3 task / satır */
+        min-height: 180px;
+        max-height: 220px;
+        overflow: hidden;
+      ">
+        <!-- Due Date -->
+        <div id="due_date" style="
+            text-align: center;
+            border: solid 2px;
+            padding: 0.5rem;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: #e0d4b7ff;
+            flex: 0 0 auto;
+        ">
+          ${due_date.toLocaleDateString("en-GB")}
+        </div>
 
-  <!-- Title -->
-  <div id="title" style="
-      padding: 0.5rem;
-      font-weight: bold;
-      text-align: start;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 0 0 auto;
-    ">
-    ${title}
-  </div>
+        <!-- Title -->
+        <div id="title" style="
+            padding: 0.5rem;
+            font-weight: bold;
+            text-align: start;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 0 0 auto;
+        ">
+          ${title}
+        </div>
 
-  <!-- Description -->
-  <div id="desc" style="
-      text-align: start;
-      padding: 0.5rem;
-      flex: 1 1 auto;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;   /* en fazla 2 satır göster */
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
-    " onclick="handleDesc(this.innerText)">
-    ${description}
-  </div>
+        <!-- Description -->
+        <div id="desc" style="
+            text-align: start;
+            padding: 0.5rem;
+            flex: 1 1 auto;
+            white-space: nowrap; /* tek satır */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        " onclick="handleDesc(this.innerText)">
+          ${description}
+        </div>
 
-  <!-- Icon Container -->
-  <div id="icon-container" style="
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: auto;         /* ikonlar hep altta */
-      padding: 0.5rem 0;
-    ">
-    <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
-    <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${
-      task.id
-    })" />
-    <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
-  </div>
-</div>
+        <!-- Icon Container -->
+        <div id="icon-container" style="
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: auto;
+            padding: 0.5rem 0;
+        ">
+          <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
+          <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${task.id})" />
+          <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
+        </div>
+      </div>
       `;
+
       taskContainer.appendChild(taskDiv);
     });
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
 };
+
+
+// const loadData = async () => {
+//   const taskContainer = document.getElementById("welcome_task_container");
+//   email = sessionStorage.getItem("email");
+//   pw = sessionStorage.getItem("password");
+//   try {
+//     const response = await fetch(`${BASE_URL}/rest/api/task/myTasks`, {
+//       method: "GET",
+//       headers: {
+//         Authorization: "Basic " + btoa(`${email}:${pw}`), // email ve password event'ten alınır
+//       },
+//     });
+//     if (!response.ok)
+//       throw new Error(`Unauthorized or fetch failed: ${email} ${pw}`);
+
+//     const tasks = await response.json();
+//     if (tasks.length === 0) {
+//       taskContainer.innerHTML = "<p>No tasks found.</p>";
+//       return;
+//     }
+//     taskContainer.innerHTML = ""; // Önceki içeriği temizle
+//     tasks.forEach((task) => {
+//       const taskDiv = document.createElement("div");
+//       const due_date = new Date(task.due_date);
+
+//       const title = task.title;
+
+//       const description = task.description;
+
+//       const done = task.done;
+
+//       taskDiv.className = "task-item";
+//       //     taskDiv.innerHTML = `
+//       //       <div style="
+//       //   background-color: #f3ddbaff;
+//       //   display: flex;
+//       //   flex-direction: column;
+//       //   font-size: larger;
+//       //   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//       //   // border-radius: 10px;
+//       //   border-bottom-left-radius: 10px;
+//       //   border-bottom-right-radius: 10px;
+//       //   box-sizing: border-box;
+//       //   width: 100%; /* kolonun tamamını kaplasın */
+//       // ">
+//       //   <div id="due_date" style="
+//       //     text-align: center;
+//       //     border: solid 2px;
+//       //     padding: 10px;
+//       //     border-bottom-left-radius: 10px;
+//       //     border-bottom-right-radius: 10px;
+//       //   ">
+//       //     ${due_date.toLocaleDateString("en-GB")}
+//       //   </div>
+//       //   <div id="title" style="padding: 10px; text-align: start">${title}</div>
+//       //   <div id="desc" style="text-align: end; padding: 10px">${description}</div>
+//       //   <div id="icon-container" style="display: flex; flex-direction: row; margin: 5px">
+//       //     <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="handleCheck(this)" />
+//       //     <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer; margin: auto" onclick="deleteTask(${
+//       //       task.id
+//       //     })"/>
+//       //     <p id="done" style="text-align: center">${showDone(task)}</p>
+//       //   </div>
+//       // </div>`;
+//       taskDiv.innerHTML = `
+//       <div style="
+//     background-color: #f3ddbaff;
+//     display: flex;
+//     flex-direction: column;
+//     font-size: larger;
+//     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//     border-radius: 10px;
+//     box-sizing: border-box;
+//     width: 100%;
+//     min-height: 180px;       /* mobilde minimum yükseklik */
+//     max-height: 220px;       /* çok uzun olursa taşmasın */
+//     overflow: hidden;
+//     margin: 0.5rem 0;
+//   ">
+  
+//   <!-- Due Date -->
+//   <div id="due_date" style="
+//       text-align: center;
+//       border: solid 2px;
+//       padding: 0.5rem;
+//       border-top-left-radius: 10px;
+//       border-top-right-radius: 10px;
+//       background-color: #e0d4b7ff;
+//       flex: 0 0 auto;
+//     ">
+//     ${due_date.toLocaleDateString("en-GB")}
+//   </div>
+
+//   <!-- Title -->
+//   <div id="title" style="
+//       padding: 0.5rem;
+//       font-weight: bold;
+//       text-align: start;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       flex: 0 0 auto;
+//     ">
+//     ${title}
+//   </div>
+
+//   <!-- Description -->
+//   <div id="desc" style="
+//       text-align: start;
+//       padding: 0.5rem;
+//       flex: 1 1 auto;
+//       overflow: hidden;
+//       display: -webkit-box;
+//       -webkit-line-clamp: 2;   /* en fazla 2 satır göster */
+//       -webkit-box-orient: vertical;
+//       text-overflow: ellipsis;
+//     " onclick="handleDesc(this.innerText)">
+//     ${description}
+//   </div>
+
+//   <!-- Icon Container -->
+//   <div id="icon-container" style="
+//       display: flex;
+//       flex-direction: row;
+//       justify-content: center;
+//       gap: 1rem;
+//       margin-top: auto;         /* ikonlar hep altta */
+//       padding: 0.5rem 0;
+//     ">
+//     <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
+//     <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${
+//       task.id
+//     })" />
+//     <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
+//   </div>
+// </div>
+//       `;
+//       taskContainer.appendChild(taskDiv);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching tasks:", error);
+//   }
+// };
 
 const showDone = (task) => {
   const done = task.done;
