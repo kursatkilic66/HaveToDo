@@ -115,13 +115,15 @@ const loadData = async () => {
   const taskContainer = document.getElementById("welcome_task_container");
 
   // Task container stilini güncelle
-  taskContainer.style.display = "flex";
-  taskContainer.style.flexWrap = "wrap";
-  taskContainer.style.gap = "1rem";
-  taskContainer.style.justifyContent = "space-between";
-  taskContainer.style.overflowY = "auto"; // dikey scroll
-  taskContainer.style.maxHeight = "80vh"; // isteğe göre ayarlanabilir
-  taskContainer.style.padding = "1rem";
+  Object.assign(taskContainer.style, {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "1rem",
+    justifyContent: "space-between",
+    overflowY: "auto", // dikey scroll
+    maxHeight: "80vh",
+    padding: "1rem",
+  });
 
   const email = sessionStorage.getItem("email");
   const pw = sessionStorage.getItem("password");
@@ -129,100 +131,80 @@ const loadData = async () => {
   try {
     const response = await fetch(`${BASE_URL}/rest/api/task/myTasks`, {
       method: "GET",
-      headers: {
-        Authorization: "Basic " + btoa(`${email}:${pw}`),
-      },
+      headers: { Authorization: "Basic " + btoa(`${email}:${pw}`) },
     });
 
-    if (!response.ok)
-      throw new Error(`Unauthorized or fetch failed: ${email} ${pw}`);
+    if (!response.ok) throw new Error(`Unauthorized or fetch failed: ${email} ${pw}`);
 
     const tasks = await response.json();
-    if (tasks.length === 0) {
-      taskContainer.innerHTML = "<p>No tasks found.</p>";
-      return;
-    }
-
-    taskContainer.innerHTML = ""; // Önceki içerik temizle
+    taskContainer.innerHTML = tasks.length === 0 ? "<p>No tasks found.</p>" : "";
 
     tasks.forEach((task) => {
-      const taskDiv = document.createElement("div");
       const due_date = new Date(task.due_date);
-      const title = task.title;
-      const description = task.description;
 
+      const taskDiv = document.createElement("div");
       taskDiv.className = "task-item";
 
+      // Task item stilleri
+      Object.assign(taskDiv.style, {
+        flex: "1 1 calc(33.33% - 0.66rem)", // 3 eşit parça
+        minWidth: "0", // overflow:hidden ile ellipsis çalışması için kritik
+        minHeight: "180px",
+        maxHeight: "220px",
+        backgroundColor: "#f3ddbaff",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "10px",
+        boxSizing: "border-box",
+        margin: "0.33rem",
+      });
+
       taskDiv.innerHTML = `
-  <div style="
-    background-color: #f3ddbaff;
-    display: flex;
-    flex-direction: column;
-    font-size: larger;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
-    box-sizing: border-box;
-    width: calc(33.33% - 0.66rem);
-    min-height: 180px;
-    max-height: 220px;
-    overflow: hidden;
-    margin: 0.33rem;
-  ">
-    <!-- Due Date -->
-    <div id="due_date" style="
-        text-align: center;
-        border: solid 2px;
-        padding: 0.5rem;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        background-color: #e0d4b7ff;
-        flex: 0 0 auto;
-    ">
-      ${due_date.toLocaleDateString("en-GB")}
-    </div>
+        <!-- Due Date -->
+        <div style="
+          text-align: center;
+          border: solid 2px;
+          padding: 0.5rem;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          background-color: #e0d4b7ff;
+          flex: 0 0 auto;
+        ">${due_date.toLocaleDateString("en-GB")}</div>
 
-    <!-- Title -->
-    <div id="title" style="
-        padding: 0.5rem;
-        font-weight: bold;
-        text-align: start;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        flex: 0 0 auto;
-    ">
-      ${title}
-    </div>
+        <!-- Title -->
+        <div style="
+          padding: 0.5rem;
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          flex: 0 0 auto;
+        ">${task.title}</div>
 
-    <!-- Description -->
-    <div id="desc" style="
-        text-align: start;
-        padding: 0.5rem;
-        flex: 1 1 auto;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    " onclick="handleDesc(this.innerText)">
-      ${description}
-    </div>
+        <!-- Description -->
+        <div style="
+          padding: 0.5rem;
+          flex: 1 1 auto;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        " onclick="handleDesc(this.innerText)">
+          ${task.description}
+        </div>
 
-    <!-- Icon Container -->
-    <div id="icon-container" style="
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
-        margin-top: auto;
-        padding: 0.5rem 0;
-    ">
-      <img src="/images/dark-check.svg" id="checkButton" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
-      <img src="/images/delete.svg" id="deleteButton" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${
-        task.id
-      })" />
-      <p id="done" style="text-align: center; margin: 0;">${showDone(task)}</p>
-    </div>
-  </div>
-`;
+        <!-- Icon Container -->
+        <div style="
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: auto;
+          padding: 0.5rem 0;
+        ">
+          <img src="/images/dark-check.svg" alt="check" style="width: 20px; height: 20px; cursor: pointer;" onclick="handleCheck(this)" />
+          <img src="/images/delete.svg" alt="delete" style="width: 20px; height: 20px; cursor: pointer;" onclick="deleteTask(${task.id})" />
+          <p style="text-align: center; margin: 0;">${showDone(task)}</p>
+        </div>
+      `;
 
       taskContainer.appendChild(taskDiv);
     });
@@ -230,6 +212,7 @@ const loadData = async () => {
     console.error("Error fetching tasks:", error);
   }
 };
+
 
 // const loadData = async () => {
 //   const taskContainer = document.getElementById("welcome_task_container");
